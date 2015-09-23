@@ -11,4 +11,7 @@
 
 class CharacterAbility < ActiveRecord::Base
   validates :character_id, :ability_id, presence: true
+
+  belongs_to :character
+  belongs_to :ability
 end

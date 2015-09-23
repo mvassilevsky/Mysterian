@@ -2,11 +2,13 @@
 #
 # Table name: characters
 #
-#  id         :integer          not null, primary key
-#  game_id    :integer          not null
-#  user_id    :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  game_id         :integer          not null
+#  user_id         :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  name            :string           not null
+#  character_sheet :text
 #
 
 require 'test_helper'
