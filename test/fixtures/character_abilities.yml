@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: character_abilities
+#
+#  id           :integer          not null, primary key
+#  character_id :integer          not null
+#  ability_id   :integer          not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  character_id: 1
+  ability_id: 1
+
+two:
+  character_id: 1
+  ability_id: 1
