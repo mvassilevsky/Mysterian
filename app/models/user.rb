@@ -22,4 +22,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_many :owned_games, class_name: "Game", foreign_key: :owner_id
+  has_many :game_users
+  has_many :characters
+  has_many :played_games, through: :game_users, source: :game
 end
