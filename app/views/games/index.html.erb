@@ -3,11 +3,11 @@
 <h2>Your Games</h2>
 <% unless @owned_games.empty? %>
 
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>Name</th>
-        <th colspan="3"></th>
+        <th colspan="2"></th>
       </tr>
     </thead>
 
@@ -15,8 +15,7 @@
     <tbody>
       <% @owned_games.each do |game| %>
       <tr>
-        <td><%= game.name %></td>
-        <td><%= link_to 'Show', game %></td>
+        <td><%= link_to game.name, game %></td>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -27,17 +26,17 @@
 
 <br>
 
-<%= link_to 'New Game', new_game_path %>
+<%= button_to 'Create A New Murder Mystery', new_game_path, class: "btn btn-primary" %>
 
+<% unless @played_games.empty? %>
 <h2>Games You're Playing</h2>
-<% unless @owned_games.empty? %>
 
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>Name</th>
         <th>Character</th>
-        <th colspan="3"></th>
+        <th colspan="2"></th>
       </tr>
     </thead>
 
@@ -45,9 +44,8 @@
     <tbody>
       <% @played_games_and_characters.each do |game, character| %>
       <tr>
-        <td><%= game.name %></td>
-        <td><%= character unless character.nil? %></td>
-        <td><%= link_to 'Show', game %></td>
+        <td><%= link_to game.name, game %></td>
+        <td><%= link_to character.name, character unless character.nil? %></td>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
