@@ -14,6 +14,8 @@ gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 gem 'devise'
 gem 'devise-bootstrap-views'
+gem 'font-awesome-sass'
+gem 'best_in_place'
 
 group :development do
   gem 'annotate'
