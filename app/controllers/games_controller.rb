@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     @characters = current_user.characters
     @played_games_and_characters = {}
     @played_games.each do |played_game|
-      character = @characters.where(game_id: played_game.id).first
+      character = @characters.find_by(game_id: played_game.id)
       @played_games_and_characters[played_game] = character
     end
   end
