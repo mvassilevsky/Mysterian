@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-ruby '2.1.5'
+ruby '2.2.1'
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.4'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder'
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 gem 'devise'
