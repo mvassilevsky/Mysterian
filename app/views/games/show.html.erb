@@ -9,11 +9,69 @@
   <p>
     <%= best_in_place @game, :description, as: :textarea, place_holder: "Background information goes here", class: "hoverable", :html_attrs => { :cols => '80', :rows => '20' }%>
   </p>
+
+  <h2>Characters</h2>
+  <% unless @characters.empty? %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Player</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <% @characters.each do |character| %>
+        <tr>
+          <td><%= link_to character.name, game_character_path(@game, character) %></td>
+          <td><%= character.user.email unless character.user.nil? %></td>
+          <td><%= link_to 'Delete', game_character_path(@game, character), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <%= render 'characters/form' %>
+
 <% else %>
   <h1><%= @game.name %></h1>
   <br>
   <% unless @game.description.nil? %>
     <p><%= @game.description %></p>
+  <% end %>
+
+  <h2>Characters</h2>
+  <% unless @characters.empty? %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Player</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <% @characters.each do |character| %>
+        <tr>
+          <td>
+            <% if character.user == current_user %>
+              <%= link_to character.name, game_character_path(@game, character) %>
+            <% else %>
+              <%= character.name %>
+            <% end %>
+          </td>
+          <td><%= character.user.email unless character.user.nil? %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
 <% end %>
 

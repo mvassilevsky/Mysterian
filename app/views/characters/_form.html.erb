@@ -1,4 +1,4 @@
-<%= form_for(@character) do |f| %>
+<%= form_for(@character, url: game_characters_path(@game.id)) do |f| %>
   <% if @character.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@character.errors.count, "error") %> prohibited this character from being saved:</h2>
@@ -11,9 +11,10 @@
     </div>
   <% end %>
 
+  <h3>Create new character</h3>
   <div class="field">
-    <%= f.label :game_id %><br>
-    <%= f.number_field :game_id %>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
   </div>
   <div class="field">
     <%= f.label :user_id %><br>

@@ -17,7 +17,10 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    @characters = @game.characters
+    @character = Character.new
   end
+
 
   # GET /games/new
   def new

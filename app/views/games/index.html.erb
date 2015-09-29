@@ -27,8 +27,8 @@
 
 <%= button_to 'Create A New Murder Mystery', new_game_path, class: "btn btn-primary", method: :get %>
 
-<% unless @played_games.empty? %>
 <h2>Games You're Playing</h2>
+<% unless @played_games.empty? %>
 
   <table class="table">
     <thead>
@@ -44,7 +44,7 @@
       <% @played_games_and_characters.each do |game, character| %>
       <tr>
         <td><%= link_to game.name, game %></td>
-        <td><%= link_to character.name, character unless character.nil? %></td>
+        <td><%= link_to character.name, game_character_path(game, character) unless character.nil? %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
       <% end %>

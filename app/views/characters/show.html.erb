@@ -1,12 +1,25 @@
 <p>
-  <strong>Game:</strong>
-  <%= @character.game_id %>
+  <strong>Character Name:</strong>
+  <%= @character.name %>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @character.user_id %>
+  <strong>Game:</strong>
+  <%= @character.game.name %>
 </p>
 
-<%= link_to 'Edit', edit_character_path(@character) %> |
-<%= link_to 'Back', characters_path %>
+<p>
+  <strong>Player:</strong>
+  <%= @character.user.email unless @character.user.nil? %>
+</p>
+
+<p>
+  <strong>Background Information:</strong>
+  <%= @character.character_sheet %>
+</p>
+
+
+<% if @character.game.owner == current_user %>
+	<%= link_to 'Edit', edit_game_character_path(@character.game_id, @character.id) %> 
+<% end %>
+<%= link_to 'Back to %s' % [@character.game.name], game_path(@character.game_id) %>

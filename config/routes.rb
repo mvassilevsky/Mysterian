@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :abilities
-  resources :characters
-  resources :games
+  resources :games do
+    resources :characters, :abilities
+  end
+  
   devise_for :users
 
   authenticated :user do
