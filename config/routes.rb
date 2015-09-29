@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :abilities
   resources :characters
   resources :games
-  devise_for :users
+  devise_for :users, controllers: {registrations: 'users/registrations'}
 
   authenticated :user do
     root to: "games#index", as: :authenticated_root
