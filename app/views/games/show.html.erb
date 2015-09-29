@@ -1,7 +1,20 @@
-<p>
-  <strong>Name:</strong>
-  <%= @game.name %><br>
-</p>
+<% if current_user == @game.owner %>
+  <h1>
+    <i class="fa fa-pencil" style="font-size:14px;"></i>
+    <%= best_in_place @game, :name, as: :input, place_holder: "Untitled Game", id: "game_name_#{@game.id}", class: "hoverable" %>
+  </h1>
+  <br>
+  <i class="fa fa-pencil" style="font-size:14px;"></i>
+  <strong>General Information</strong>:
+  <p>
+    <%= best_in_place @game, :description, as: :textarea, place_holder: "Background information goes here", class: "hoverable", :html_attrs => { :cols => '80', :rows => '20' }%>
+  </p>
+<% else %>
+  <h1><%= @game.name %></h1>
+  <br>
+  <% unless @game.description.nil? %>
+    <p><%= @game.description %></p>
+  <% end %>
+<% end %>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
