@@ -4,6 +4,9 @@ body {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
+  background-image: image-url('background-paper.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 p, ol, ul, td {
