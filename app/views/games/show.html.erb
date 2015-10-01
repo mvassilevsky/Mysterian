@@ -26,9 +26,15 @@
       <tbody>
         <% @characters.each do |character| %>
         <tr>
-          <td><%= link_to character.name, game_character_path(@game, character) %></td>
-          <td><%= character.user.email unless character.user.nil? %></td>
-          <td><%= link_to 'Delete', game_character_path(@game, character), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td>
+            <%= link_to character.name, game_character_path(@game, character) %>
+          </td>
+          <td>
+            <%= character.user.display_name unless character.user.nil? %>
+          </td>
+          <td>
+            <%= link_to 'Delete', game_character_path(@game, character), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
         </tr>
         <% end %>
       </tbody>
@@ -67,7 +73,9 @@
               <%= character.name %>
             <% end %>
           </td>
-          <td><%= character.user.email unless character.user.nil? %></td>
+          <td>
+            <%= character.user.display_name unless character.user.nil? %>
+          </td>
         </tr>
         <% end %>
       </tbody>

@@ -28,7 +28,7 @@
 
   <p>
     <strong>Player:</strong>
-    <%= @character.user.first_name + " " + @character.user.last_name unless @character.user.nil? %>
+    <%= @character.user.display_name unless @character.user.nil? %>
   </p>
 
   <p>

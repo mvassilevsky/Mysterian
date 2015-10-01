@@ -4,13 +4,17 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    @owned_games = current_user.owned_games
-    @played_games = current_user.played_games
-    @characters = current_user.characters
-    @played_games_and_characters = {}
-    @played_games.each do |played_game|
-      character = @characters.find_by(game_id: played_game.id)
-      @played_games_and_characters[played_game] = character
+    if current_user.nil?
+      @games = Game.all
+    else
+      @owned_games = current_user.owned_games
+      @played_games = current_user.played_games
+      @characters = current_user.characters
+      @played_games_and_characters = {}
+      @played_games.each do |played_game|
+        character = @characters.find_by(game_id: played_game.id)
+        @played_games_and_characters[played_game] = character
+      end
     end
   end
 

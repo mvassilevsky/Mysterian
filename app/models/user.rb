@@ -29,4 +29,14 @@ class User < ActiveRecord::Base
   has_many :game_users
   has_many :characters
   has_many :played_games, through: :game_users, source: :game
+
+  def display_name
+    if first_name.nil?
+      email
+    elsif last_name.nil?
+      first_name
+    else
+      first_name + " " + last_name
+    end
+  end
 end

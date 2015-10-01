@@ -1,53 +1,85 @@
 <h1>Games</h1>
 
-<h2>Your Games</h2>
-<% unless @owned_games.empty? %>
-
+<% if current_user.nil? %>
   <table class="table">
     <thead>
       <tr>
         <th>Name</th>
-        <th colspan="1"></th>
-      </tr>
-    </thead>
-
-
-    <tbody>
-      <% @owned_games.each do |game| %>
-      <tr>
-        <td><%= link_to game.name, game %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
-
-<br>
-
-<%= button_to 'Create A New Murder Mystery', new_game_path, class: "btn btn-primary", method: :get %>
-
-<h2>Games You're Playing</h2>
-<% unless @played_games.empty? %>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Character</th>
+        <th>Game Master</th>
         <th colspan="2"></th>
       </tr>
     </thead>
 
 
     <tbody>
-      <% @played_games_and_characters.each do |game, character| %>
+      <% @games.each do |game| %>
       <tr>
         <td><%= link_to game.name, game %></td>
-        <td><%= link_to character.name, game_character_path(game, character) unless character.nil? %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= game.owner.display_name %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
+<% else %>
+  <h2>Your Games</h2>
+  <% unless @owned_games.empty? %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <% @owned_games.each do |game| %>
+        <tr>
+          <td><%= link_to game.name, game %></td>
+          <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <br>
+
+  <%= button_to 'Create A New Murder Mystery', new_game_path, class: "btn btn-primary", method: :get %>
+
+  <h2>Games You're Playing</h2>
+  <% unless @played_games.empty? %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Character</th>
+          <th>Game Master</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <% @played_games_and_characters.each do |game, character| %>
+        <tr>
+          <td>
+            <%= link_to game.name, game %>
+          </td>
+          <td>
+            <%= link_to character.name, game_character_path(game, character) unless character.nil? %>
+          </td>
+          <td>
+            <%= game.owner.display_name %>
+          </td>
+          <td>
+            <%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 <% end %>
