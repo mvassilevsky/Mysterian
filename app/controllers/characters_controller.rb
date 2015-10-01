@@ -29,7 +29,7 @@ class CharactersController < ApplicationController
   def create
     @character = Character.new(character_params)
     @character.game_id = params[:game_id]
-    
+
     respond_to do |format|
       if @character.save
           GameUser.create(game: @character.game, user: @character.user)
@@ -63,7 +63,7 @@ class CharactersController < ApplicationController
     respond_to do |format|
       if @character.update(character_params)
         format.html { redirect_to game_path(@character.game_id), notice: 'Character was successfully updated.' }
-        format.json { render :show, status: :ok, location: @character }
+        format.json { render :show, status: :ok, location: game_path(@character.game_id) }
       else
         format.html { render :edit }
         format.json { render json: @character.errors, status: :unprocessable_entity }

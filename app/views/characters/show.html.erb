@@ -1,25 +1,40 @@
-<p>
-  <strong>Character Name:</strong>
-  <%= @character.name %>
-</p>
+<% if current_user == @character.game.owner %>
+  <h1>
+    <i class="fa fa-pencil" style="font-size:14px;"></i>
+    <%= best_in_place @character, :name, as: :input, place_holder: "Unnamed Character", id: "character_name_#{@character.id}", class: "hoverable", path: game_character_path %>
+  </h1>
 
-<p>
-  <strong>Game:</strong>
-  <%= @character.game.name %>
-</p>
+  <p>
+    <i class="fa fa-pencil" style="font-size:14px;"></i>
+    <strong>Player:</strong>
+    EDIT ME LATER
+  </p>
 
-<p>
-  <strong>Player:</strong>
-  <%= @character.user.email unless @character.user.nil? %>
-</p>
+  <p>
+    <i class="fa fa-pencil" style="font-size:14px;"></i>
+    <strong>Character Information:</strong>
+  </p>
+  <p>
+    <%= best_in_place @character, :character_sheet, as: :textarea, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, path: game_character_path %>
+  </p>
 
-<p>
-  <strong>Background Information:</strong>
-  <%= @character.character_sheet %>
-</p>
+<% else %>
+  <h1><%= @character.name %></h1>
 
+  <p>
+    <strong>Game:</strong>
+    <%= link_to @character.game, @character.game.name %>
+  </p>
 
-<% if @character.game.owner == current_user %>
-	<%= link_to 'Edit', edit_game_character_path(@character.game_id, @character.id) %> 
+  <p>
+    <strong>Player:</strong>
+    <%= @character.user.first_name + " " + @character.user.last_name unless @character.user.nil? %>
+  </p>
+
+  <p>
+    <strong>Character Information:</strong>
+    <%= @character.character_sheet %>
+  </p>
 <% end %>
+
 <%= link_to 'Back to %s' % [@character.game.name], game_path(@character.game_id) %>

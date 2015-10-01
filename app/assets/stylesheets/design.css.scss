@@ -6,7 +6,7 @@ html, body {
 
 #wrapper {
   min-height: 100%;
-  position:relative;
+  position: relative;
 }
 
 /***** HEADER *****/
@@ -140,7 +140,7 @@ header .breadcrumb li.active {
   margin-left: 240px;
   background: #e4e7ea;
   min-height: 600px;
-  padding-bottom:60px; /* Height of the footer */
+  padding-bottom: 60px; /* Height of the footer */
 }
 
 .contentpanel {
@@ -180,6 +180,10 @@ a.btn:visited {
 .hoverable:hover {
   background-color: #e0e0e0;
   cursor: pointer;
+}
+
+.alert-success {
+  background-color: #d2691e;
 }
 
 /***** FOOTER *****/
