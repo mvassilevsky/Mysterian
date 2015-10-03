@@ -16,4 +16,6 @@ class Character < ActiveRecord::Base
 
   belongs_to :game
   belongs_to :user
+
+  attr_accessor :player_email #necessary for character creation form
 end

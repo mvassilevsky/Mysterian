@@ -17,8 +17,8 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
+    <%= f.label :player_email, "Player email (can be assigned later)" %><br>
+    <%= f.text_field :player_email %>
   </div>
   <div class="actions">
     <%= f.submit "Create Character", class: "btn btn-primary" %>

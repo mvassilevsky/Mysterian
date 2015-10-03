@@ -29,15 +29,32 @@ class CharactersController < ApplicationController
   def create
     @character = Character.new(character_params)
     @character.game_id = params[:game_id]
+    @player = User.find_by(email: params[:character][:player_email])
+    @character.user_id = @player.id unless @player.nil? #change this when we get registration working
 
     respond_to do |format|
       if @character.save
-          GameUser.create(game: @character.game, user: @character.user)
-          format.html { redirect_to game_path(@character.game_id), notice: 'Character was successfully created.' }
-          format.json { render :show, status: :created, location: @character }
+        if @player.nil? and !params[:player_email].blank?
+          format.html { redirect_to game_path(@character.game_id),
+                        notice: 'Character was successfully created, but ' +
+                                'there is no user with that email address.' }
+        elsif !params[:character][:player_email].blank?
+          game_user = GameUser.find_by(user_id: @character.user.id,
+                                       game_id: @character.game.id)
+          GameUser.create(user_id: @player.id,
+                          game_id: @character.game.id) unless game_user
+          UserMailer.invite_email(@player, @character.game, @character).deliver
+          format.html { redirect_to game_path(@character.game_id),
+                        notice: 'Character was successfully created.' }
+        else
+          format.html { redirect_to game_path(@character.game_id),
+                        notice: 'Character was successfully created.' }
+        end
+        format.json { render :show, status: :created, location: @character }
       else
         format.html { render :new }
-        format.json { render json: @character.errors, status: :unprocessable_entity }
+        format.json { render json: @character.errors,
+                      status: :unprocessable_entity }
       end
 
       # begin
@@ -60,13 +77,39 @@ class CharactersController < ApplicationController
   # PATCH/PUT /games/:game_id/characters/1
   # PATCH/PUT /games/:game_id/characters/1.json
   def update
+    @player = User.find_by(params[:character][:player_email])
+    new_user_assigned = false
+
+    #change this when we have registration working
+    unless @player.nil?
+      new_user_assigned = true
+      @character.user_id = @player.id
+    end
+
     respond_to do |format|
       if @character.update(character_params)
-        format.html { redirect_to game_path(@character.game_id), notice: 'Character was successfully updated.' }
-        format.json { render :show, status: :ok, location: game_path(@character.game_id) }
+        if @player.nil? and !params[:character][:player_email].blank?
+          format.html { redirect_to game_path(@character.game_id),
+                        notice: 'Character was successfully updated, but ' +
+                        'there is no user with that email address.' }
+        else
+          if new_user_assigned
+            game_user = GameUser.find_by(user_id: @character.user.id,
+                                         game_id: @character.game.id)
+            GameUser.create(user_id: @character.user.id,
+                            game_id: @character.game.id) unless game_user
+            UserMailer.invite_email(@player, @character.game,
+                                    @character).deliver
+          end
+          format.html { redirect_to game_path(@character.game_id),
+                        notice: 'Character was successfully updated.' }
+        end
+        format.json { render :show, status: :ok,
+                      location: game_path(@character.game_id) }
       else
         format.html { render :edit }
-        format.json { render json: @character.errors, status: :unprocessable_entity }
+        format.json { render json: @character.errors,
+                      status: :unprocessable_entity }
       end
     end
   end
@@ -74,9 +117,12 @@ class CharactersController < ApplicationController
   # DELETE /games/:game_id/characters/1
   # DELETE /games/:game_id/characters/1.json
   def destroy
+    @game_user = GameUser.find_by(game: @character.game, user: @character.user)
+    @game_user.destroy unless @game_user.nil?
     @character.destroy
     respond_to do |format|
-      format.html { redirect_to game_path(@character.game_id), notice: 'Character was successfully deleted.' }
+      format.html { redirect_to game_path(@character.game_id),
+                    notice: 'Character was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -89,6 +135,7 @@ class CharactersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def character_params
-      params.require(:character).permit(:name, :character_sheet, :game_id, :user_id)
+      params.require(:character).permit(:name, :character_sheet, :game_id,
+                                        :player_email)
     end
 end
