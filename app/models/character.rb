@@ -18,4 +18,9 @@ class Character < ActiveRecord::Base
   belongs_to :user
 
   attr_accessor :player_email #necessary for character creation form
+
+  #necessary for best_in_place updating
+  def display_player_email
+    user.email unless user.nil?
+  end
 end

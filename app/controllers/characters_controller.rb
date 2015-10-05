@@ -39,10 +39,11 @@ class CharactersController < ApplicationController
               format.html { redirect_to game_path(@character.game_id),
                             notice: 'Character was successfully created, but ' +
                                     'there is no user with that email address.' }
-          else  
+          else
             GameUser.where(user_id: @character.user.id,
                            game_id: @character.game.id).first_or_create
-            UserMailer.invite_email(@player, @character.game, @character).deliver
+            UserMailer.invite_email(@player, @character.game,
+                                    @character).deliver_now
             format.html { redirect_to game_path(@character.game_id),
                           notice: 'Character was successfully created.' }
           end
@@ -62,23 +63,23 @@ class CharactersController < ApplicationController
   # PATCH/PUT /games/:game_id/characters/1
   # PATCH/PUT /games/:game_id/characters/1.json
   def update
-    @player = User.find_by(params[:character][:player_email])
-    
+    @player = User.find_by(email: params[:character][:player_email])
+
     if @player.nil?
-      @character.user_id = nil  
-      new_user_assigned = false 
+      @character.user_id = nil unless params[:character][:player_email].nil?
+      new_user_assigned = false
     else
-      @character.user_id = @player.id 
+      @character.user_id = @player.id
       new_user_assigned = true
     end
 
     respond_to do |format|
-      if @character.update(character_params)          
+      if @character.update(character_params)
         if new_user_assigned
           GameUser.where(user_id: @character.user.id,
                          game_id: @character.game.id).first_or_create
           UserMailer.invite_email(@player, @character.game,
-                                  @character).deliver
+                                  @character).deliver_now
           format.html { redirect_to game_path(@character.game_id),
                         notice: 'Character was successfully updated.' }
         else

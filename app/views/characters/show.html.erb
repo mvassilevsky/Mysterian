@@ -1,13 +1,13 @@
 <% if current_user == @character.game.owner %>
   <h1>
     <i class="fa fa-pencil" style="font-size:14px;"></i>
-    <%= best_in_place @character, :name, as: :input, place_holder: "Unnamed Character", id: "character_name_#{@character.id}", class: "hoverable", path: game_character_path %>
+    <%= best_in_place @character, :name, as: :input, place_holder: "Unnamed Character", id: "character_name_#{@character.id}", class: "hoverable", url: game_character_path %>
   </h1>
 
   <p>
     <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Player:</strong>
-    EDIT ME LATER
+    <%= best_in_place @character, :player_email, as: :input, display_as: :display_player_email, place_holder: "No Player Assigned", class: "hoverable", url: game_character_path %>
   </p>
 
   <p>
@@ -15,7 +15,7 @@
     <strong>Character Information:</strong>
   </p>
   <p>
-    <%= best_in_place @character, :character_sheet, as: :textarea, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, path: game_character_path %>
+    <%= best_in_place @character, :character_sheet, as: :textarea, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, url: game_character_path %>
   </p>
 
 <% else %>
