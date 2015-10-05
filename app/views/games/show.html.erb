@@ -84,3 +84,9 @@
 <% end %>
 
 <%= link_to 'Back', games_path %>
+
+<script>
+  $('.best_in_place').bind('ajax:success', function() {
+    this.innerHTML = this.innerHTML.replace(/\n/g, '<br />');
+  });
+</script>

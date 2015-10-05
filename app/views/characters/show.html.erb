@@ -14,9 +14,7 @@
     <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Character Information:</strong>
   </p>
-  <p>
-    <%= best_in_place @character, :character_sheet, as: :textarea, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, url: game_character_path %>
-  </p>
+  <%= best_in_place @character, :character_sheet, as: :textarea, display_with: :simple_format, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, url: game_character_path%>
 
 <% else %>
   <h1><%= @character.name %></h1>
@@ -38,3 +36,9 @@
 <% end %>
 
 <%= link_to 'Back to %s' % [@character.game.name], game_path(@character.game_id) %>
+
+<script>
+  $('.best_in_place').bind('ajax:success', function() {
+    this.innerHTML = this.innerHTML.replace(/\n/g, '<br />');
+  });
+</script>
