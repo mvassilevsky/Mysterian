@@ -14,7 +14,22 @@
     <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Character Information:</strong>
   </p>
-  <%= best_in_place @character, :character_sheet, as: :textarea, display_with: :simple_format, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, url: game_character_path%>
+  <%= best_in_place @character, :character_sheet, as: :textarea, display_with: :simple_format, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, url: game_character_path %>
+
+  <p>
+    <i class="fa fa-pencil" style="font-size:14px;"></i>
+    <strong>Abilities:</strong>
+    <div class="abilities-list">
+    </div>
+    <select class="ability-select">
+      <option value="" selected="selected"></option>
+      <option value="Private Kill">Private Kill</option>
+      <option value="Public Kill">Public Kill</option>
+      <option value="Steal">Steal</option>
+      <option value="Coerce">Coerce</option>
+      <option value="Save">Save</option>
+    </select>
+  </p>
 
 <% else %>
   <h1><%= @character.name %></h1>
@@ -33,12 +48,26 @@
     <strong>Character Information:</strong>
     <%= @character.character_sheet %>
   </p>
+
+  <p>
+    <strong>Abilities:</strong>
+    <p>FILL IN LATER</p>
+  </p>
 <% end %>
 
-<%= link_to 'Back to %s' % [@character.game.name], game_path(@character.game_id) %>
+<p>
+  <%= link_to 'Back to %s' % [@character.game.name], game_path(@character.game_id) %>
+</p>
 
 <script>
   $('.best_in_place').bind('ajax:success', function() {
     this.innerHTML = this.innerHTML.replace(/\n/g, '<br />');
+  });
+
+  $('.ability-select').change(function() {
+    $('.abilities-list').append(
+      '<span class="ability"><span class="delete-ability">X</span>' + $('.ability-select option:selected').text() + '</span>'
+      );
+    $(this).prop('selectedIndex', 0);
   });
 </script>
