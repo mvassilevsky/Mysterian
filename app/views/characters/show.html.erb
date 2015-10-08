@@ -20,15 +20,15 @@
     <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Abilities:</strong>
     <div class="abilities-list">
+      <select class="ability-select">
+        <option value="" selected="selected"></option>
+        <option value="Private Kill">Private Kill</option>
+        <option value="Public Kill">Public Kill</option>
+        <option value="Steal">Steal</option>
+        <option value="Coerce">Coerce</option>
+        <option value="Save">Save</option>
+      </select>
     </div>
-    <select class="ability-select">
-      <option value="" selected="selected"></option>
-      <option value="Private Kill">Private Kill</option>
-      <option value="Public Kill">Public Kill</option>
-      <option value="Steal">Steal</option>
-      <option value="Coerce">Coerce</option>
-      <option value="Save">Save</option>
-    </select>
   </p>
 
 <% else %>
@@ -65,9 +65,11 @@
   });
 
   $('.ability-select').change(function() {
-    $('.abilities-list').append(
-      '<span class="ability"><span class="delete-ability">X</span>' + $('.ability-select option:selected').text() + '</span>'
-      );
+    $('<span class="ability"><span class="delete-ability">✖</span>' + $('.ability-select option:selected').text() + '</span>').insertBefore($('.ability-select'));
     $(this).prop('selectedIndex', 0);
+  });
+
+  $(document).on('click', '.delete-ability', function() {
+    $(this).parent('.ability').remove();
   });
 </script>
