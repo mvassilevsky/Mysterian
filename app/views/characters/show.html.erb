@@ -36,7 +36,7 @@
 
   <p>
     <strong>Game:</strong>
-    <%= link_to @character.game, @character.game.name %>
+    <%= link_to @character.game.name, @character.game %>
   </p>
 
   <p>
@@ -46,7 +46,7 @@
 
   <p>
     <strong>Character Information:</strong>
-    <%= @character.character_sheet %>
+    <%= simple_format(@character.character_sheet) %>
   </p>
 
   <p>

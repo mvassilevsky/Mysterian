@@ -45,9 +45,13 @@
 
 <% else %>
   <h1><%= @game.name %></h1>
+  <strong>Game Master:</strong>
+  <%= @game.owner.display_name %>
   <br>
+  <br>
+  <strong>General Information</strong>:
   <% unless @game.description.nil? %>
-    <p><%= @game.description %></p>
+    <%= simple_format(@game.description) %>
   <% end %>
 
   <h2>Characters</h2>
