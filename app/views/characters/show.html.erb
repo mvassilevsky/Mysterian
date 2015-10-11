@@ -1,3 +1,7 @@
+<div class="character-id" style="display:none;">
+  <%= @character.id %>
+</div>
+
 <% if current_user == @character.game.owner %>
   <h1>
     <i class="fa fa-pencil" style="font-size:14px;"></i>
@@ -20,16 +24,16 @@
     <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Abilities:</strong>
     <div class="abilities-list">
-      <% @abilities.each do |ability| %>
-        <span class="ability">
+      <% @character_abilities.each do |character_ability| %>
+        <span class="ability" data-character-ability-id="<%= character_ability.id %>">
           <span class="delete-ability">✖</span>
-          <%= ability.name %>
+          <%= character_ability.ability.name %>
         </span>
       <% end %>
       <select class="ability-select">
         <option value="" selected="selected"></option>
         <% @all_abilities.each do |ability| %>
-          <option value="<%= ability.name %>"><%= ability.name %></option>
+          <option value="<%= ability.name %>" data-ability-id="<%= ability.id %>"><%= ability.name %></option>
         <% end %>
       </select>
     </div>
@@ -55,7 +59,13 @@
 
   <p>
     <strong>Abilities:</strong>
-    <p>FILL IN LATER</p>
+    <div class="abilities-list">
+      <% @character_abilities.each do |character_ability| %>
+        <span class="ability" data-character-ability-id="<%= character_ability.id %>">
+          <%= character_ability.ability.name %>
+        </span>
+      <% end %>
+    </div>
   </p>
 <% end %>
 
@@ -69,11 +79,31 @@
   });
 
   $('.ability-select').change(function() {
-    $('<span class="ability"><span class="delete-ability">✖</span>' + $('.ability-select option:selected').text() + '</span>').insertBefore($('.ability-select'));
-    $(this).prop('selectedIndex', 0);
+    var characterId = parseInt($('.character-id').text());
+    var abilityId = parseInt($('.ability-select option:selected').data('ability-id'));
+    $.ajax({
+      url: '/abilities/add',
+      type: 'post',
+      data: {
+        character_id : characterId,
+        ability_id : abilityId
+      },
+      success: function(json) {
+        $('<span class="ability" data-character-ability-id="' + json.character_ability_id + '"><span class="delete-ability">✖</span>' + $('.ability-select option:selected').text() + '</span>').insertBefore($('.ability-select'));
+        $(this).prop('selectedIndex', 0);        
+      }
+    });
+
   });
 
   $(document).on('click', '.delete-ability', function() {
-    $(this).parent('.ability').remove();
+    var characterAbilityId = $(this).parent('.ability').data('character-ability-id');
+    $.ajax({
+      url: '/abilities/' + characterAbilityId,
+      type: 'delete',
+      success: function() {
+        $(this).parent('.ability').remove();
+      }.bind(this)
+    });
   });
 </script>
