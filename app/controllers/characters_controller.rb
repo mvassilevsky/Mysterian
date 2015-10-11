@@ -12,7 +12,8 @@ class CharactersController < ApplicationController
   # GET /games/:game_id/characters/1.json
   def show
     @character = Character.find(params[:id])
-    @character_abilities = @character.character_abilities
+    @abilities = @character.abilities
+    @all_abilities = Ability.all
   end
 
   # GET /games/:game_id/characters/new

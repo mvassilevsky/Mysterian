@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Ability.create(name: "Private Kill")
+Ability.create(name: "Public Kill")
+Ability.create(name: "Save")
+Ability.create(name: "Steal")
+Ability.create(name: "Coerce")
+Ability.create(name: "Block")

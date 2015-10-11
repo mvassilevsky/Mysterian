@@ -20,13 +20,17 @@
     <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Abilities:</strong>
     <div class="abilities-list">
+      <% @abilities.each do |ability| %>
+        <span class="ability">
+          <span class="delete-ability">✖</span>
+          <%= ability.name %>
+        </span>
+      <% end %>
       <select class="ability-select">
         <option value="" selected="selected"></option>
-        <option value="Private Kill">Private Kill</option>
-        <option value="Public Kill">Public Kill</option>
-        <option value="Steal">Steal</option>
-        <option value="Coerce">Coerce</option>
-        <option value="Save">Save</option>
+        <% @all_abilities.each do |ability| %>
+          <option value="<%= ability.name %>"><%= ability.name %></option>
+        <% end %>
       </select>
     </div>
   </p>
