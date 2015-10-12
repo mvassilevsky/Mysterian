@@ -3,12 +3,11 @@
     <i class="fa fa-pencil" style="font-size:14px;"></i>
     <%= best_in_place @game, :name, as: :input, place_holder: "Untitled Game", id: "game_name_#{@game.id}", class: "hoverable" %>
   </h1>
-  <br>
-  <i class="fa fa-pencil" style="font-size:14px;"></i>
-  <strong>General Information</strong>:
   <p>
-    <%= best_in_place @game, :description, as: :textarea, place_holder: "Background information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }%>
+    <i class="fa fa-pencil" style="font-size:14px;"></i>
+    <strong>General Information:</strong>
   </p>
+  <%= best_in_place @game, :description, as: :textarea, display_with: :simple_format, place_holder: "Background information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }%>
 
   <h2>Characters</h2>
   <% unless @characters.empty? %>
@@ -87,7 +86,10 @@
   <% end %>
 <% end %>
 
-<%= link_to 'Back', games_path %>
+<%= link_to games_path do %>
+  <i class="fa fa-arrow-left" style="font-size:14px;"></i>
+  Back to all games
+<% end %>
 
 <script>
   $('.best_in_place').bind('ajax:success', function() {

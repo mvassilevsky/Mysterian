@@ -70,7 +70,10 @@
 <% end %>
 
 <p>
-  <%= link_to 'Back to %s' % [@character.game.name], game_path(@character.game_id) %>
+  <%= link_to game_path(@character.game_id) do %>
+    <i class="fa fa-arrow-left" style="font-size:14px;"></i>
+    <%= 'Back to %s' % [@character.game.name] %>
+  <% end %>
 </p>
 
 <script>
@@ -90,8 +93,8 @@
       },
       success: function(json) {
         $('<span class="ability" data-character-ability-id="' + json.character_ability_id + '"><span class="delete-ability">✖</span>' + $('.ability-select option:selected').text() + '</span>').insertBefore($('.ability-select'));
-        $(this).prop('selectedIndex', 0);        
-      }
+        $(this).prop('selectedIndex', 0);
+      }.bind(this)
     });
 
   });
