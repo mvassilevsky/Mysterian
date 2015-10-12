@@ -16,6 +16,7 @@ gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'font-awesome-sass'
 gem 'best_in_place'
+gem 'friendly_id'
 
 group :development do
   gem 'annotate'

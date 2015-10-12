@@ -37,7 +37,7 @@
         <% @owned_games.each do |game| %>
         <tr>
           <td><%= link_to game.name, game %></td>
-          <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Delete', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <% end %>
       </tbody>
@@ -57,7 +57,6 @@
           <th>Name</th>
           <th>Character</th>
           <th>Game Master</th>
-          <th colspan="2"></th>
         </tr>
       </thead>
 
@@ -74,12 +73,11 @@
           <td>
             <%= game.owner.display_name %>
           </td>
-          <td>
-            <%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
         </tr>
         <% end %>
       </tbody>
     </table>
+  <% else %>
+    <p>You haven't been invited to any games yet.</p>
   <% end %>
 <% end %>

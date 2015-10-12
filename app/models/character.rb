@@ -12,7 +12,11 @@
 #
 
 class Character < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   validates :game_id, presence: true
+  validates :name, uniqueness: { scope: :game_id }, presence: true
 
   belongs_to :game
   belongs_to :user
@@ -24,5 +28,11 @@ class Character < ActiveRecord::Base
   #necessary for best_in_place updating
   def display_player_email
     user.email unless user.nil?
+  end
+
+  def slug_candidates
+    [
+      :name,
+    ]
   end
 end

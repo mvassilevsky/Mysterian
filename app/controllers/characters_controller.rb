@@ -11,7 +11,6 @@ class CharactersController < ApplicationController
   # GET /games/:game_id/characters/1
   # GET /games/:game_id/characters/1.json
   def show
-    @character = Character.find(params[:id])
     @character_abilities = @character.character_abilities
     @all_abilities = Ability.all
   end
@@ -56,7 +55,9 @@ class CharactersController < ApplicationController
         end
         format.json { render :show, status: :created, location: @character }
       else
-        format.html { render :new }
+        @game = Game.find(params[:game_id])
+        @characters = @game.characters
+        format.html { render 'games/show' }
         format.json { render json: @character.errors,
                       status: :unprocessable_entity }
       end
@@ -112,13 +113,13 @@ class CharactersController < ApplicationController
   end
 
   # POST /abilities/add
-  def add_character_ability 
+  def add_character_ability
     @character_ability = CharacterAbility.create(character_id: params[:character_id],
                                                  ability_id: params[:ability_id])
     render json: {character_ability_id: @character_ability.id}
   end
 
-  # DELETE /abilities/:id 
+  # DELETE /abilities/:id
   def delete_character_ability
     CharacterAbility.delete(params[:id])
     render nothing: true
@@ -127,7 +128,7 @@ class CharactersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_character
-      @character = Character.find(params[:id])
+      @character = Character.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
