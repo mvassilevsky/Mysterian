@@ -17,7 +17,7 @@
         <tr>
           <th>Name</th>
           <th>Player</th>
-          <th colspan="1"></th>
+          <th></th>
         </tr>
       </thead>
 
@@ -41,6 +41,35 @@
   <% end %>
 
   <%= render 'characters/form' %>
+
+  <h2>Abilities</h2>
+
+  <% if @has_abilities %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Ability</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <% @ability_counts.each do |ability, count| %>
+        <tr>
+          <td>
+            <span class="ability"><%= ability.name %></span>
+          </td>
+          <td>
+            <%= count %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No characters in this game have abilities yet.</p>
+  <% end %>
 
 <% else %>
   <h1><%= @game.name %></h1>

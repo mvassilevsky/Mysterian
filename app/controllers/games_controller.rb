@@ -21,8 +21,16 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
-    @characters = @game.characters
+    @characters = @game.characters.includes(:abilities)
     @character = Character.new
+    @ability_counts = Hash.new(0)
+    @has_abilities = false
+    @characters.each do |character|
+      character.abilities.each do |ability|
+        @has_abilities = true
+        @ability_counts[ability] += 1
+      end
+    end
   end
 
   # GET /games/new
