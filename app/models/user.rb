@@ -31,9 +31,9 @@ class User < ActiveRecord::Base
   has_many :played_games, through: :game_users, source: :game
 
   def display_name
-    if first_name.nil?
+    if first_name.blank?
       email
-    elsif last_name.nil?
+    elsif last_name.blank?
       first_name
     else
       first_name + " " + last_name

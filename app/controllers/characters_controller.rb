@@ -11,6 +11,9 @@ class CharactersController < ApplicationController
   # GET /games/:game_id/characters/1
   # GET /games/:game_id/characters/1.json
   def show
+    if @character.game.owner != current_user && @character.user != current_user
+      redirect_to games_url, notice: "That's not your character!"
+    end
     @character_abilities = @character.character_abilities
     @all_abilities = Ability.all
   end
