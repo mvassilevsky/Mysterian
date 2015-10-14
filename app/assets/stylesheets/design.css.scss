@@ -165,16 +165,16 @@ code {
   background-color: #eee;
 }
 
+a {
+  color: #000 !important;
+}
+
 a:link {
   color: #000;
 }
 
 a:hover {
   color: #fff !important;
-}
-
-a {
-  color: #000 !important;
 }
 
 a.btn:visited {
