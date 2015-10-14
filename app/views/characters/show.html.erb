@@ -70,7 +70,7 @@
 <% end %>
 
 <p>
-  <%= link_to game_path(@character.game_id) do %>
+  <%= link_to game_path(@character.game.slug) do %>
     <i class="fa fa-arrow-left" style="font-size:14px;"></i>
     <%= 'Back to %s' % [@character.game.name] %>
   <% end %>
