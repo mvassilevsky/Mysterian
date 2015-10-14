@@ -127,6 +127,10 @@ header .breadcrumb li.active {
   color: #333;
 }
 
+header a {
+  color: #fff !important;
+}
+
 .navbar {
   border: none;
   border-radius: 0px;
@@ -167,10 +171,6 @@ code {
 
 a {
   color: #000 !important;
-}
-
-a.navbar-brand {
-  color: #fff !important;
 }
 
 a:link {

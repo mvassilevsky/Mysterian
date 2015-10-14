@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @game = game
     @character = character
-    mail(from: "localhost", to: user.email,
+    mail(from: "Mysterian", to: user.email,
          subject: "You've been invited to a murder mystery!")
   end
 
