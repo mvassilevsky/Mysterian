@@ -33,7 +33,8 @@ class CharactersController < ApplicationController
   # POST /games/:game_id/characters.json
   def create
     @character = Character.new(character_params)
-    @character.game_id = params[:game_id]
+    @game = Game.friendly.find(params[:game_id])
+    @character.game_id = @game.id
     @player = User.find_by(email: params[:character][:player_email])
     @character.user_id = @player.id unless @player.nil? #change this when we get registration working
 
@@ -41,7 +42,7 @@ class CharactersController < ApplicationController
       if @character.save
         if !params[:character][:player_email].blank?
           if @player.nil?
-              format.html { redirect_to game_path(@character.game_id),
+              format.html { redirect_to game_path(@game.slug),
                             notice: 'Character was successfully created, but ' +
                                     'there is no user with that email address.' }
           else
@@ -49,11 +50,11 @@ class CharactersController < ApplicationController
                            game_id: @character.game.id).first_or_create
             UserMailer.invite_email(@player, @character.game,
                                     @character).deliver_now
-            format.html { redirect_to game_path(@character.game_id),
+            format.html { redirect_to game_path(@game.slug),
                           notice: 'Character was successfully created.' }
           end
         else
-          format.html { redirect_to game_path(@character.game_id),
+          format.html { redirect_to game_path(@game.slug),
                         notice: 'Character was successfully created.' }
         end
         format.json { render :show, status: :created, location: @character }
