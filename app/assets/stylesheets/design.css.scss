@@ -214,6 +214,18 @@ a.btn:visited {
   cursor: pointer;
 }
 
+#error_explanation {
+  border-color: #b81 #b81 #b81 #b81 !important;
+}
+
+#error_explanation h2 {
+  background-color: #a70 !important;
+}
+
+.field_with_errors {
+  background-color: #b81 !important;
+}
+
 /***** FOOTER *****/
 /**********************/
 

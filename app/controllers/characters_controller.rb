@@ -59,7 +59,6 @@ class CharactersController < ApplicationController
         end
         format.json { render :show, status: :created, location: @character }
       else
-        @game = Game.find(params[:game_id])
         @characters = @game.characters
         format.html { render 'games/show' }
         format.json { render json: @character.errors,
@@ -110,7 +109,7 @@ class CharactersController < ApplicationController
   def destroy
     @character.destroy
     respond_to do |format|
-      format.html { redirect_to game_path(@character.game_id),
+      format.html { redirect_to game_path(@character.game.slug),
                     notice: 'Character was successfully deleted.' }
       format.json { head :no_content }
     end
