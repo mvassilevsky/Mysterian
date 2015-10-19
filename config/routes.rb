@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :games do
     resources :characters
   end
@@ -8,8 +9,8 @@ Rails.application.routes.draw do
     root to: "games#index", as: :authenticated_root
   end
 
-  post 'abilities/add', to: "characters#add_character_ability"
-  delete 'abilities/:id', to: "characters#delete_character_ability"
+  post 'abilities/add', to: "character_abilities#add_character_ability"
+  delete 'abilities/:id', to: "character_abilities#delete_character_ability"
 
   unauthenticated do
     as :user do
