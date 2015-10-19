@@ -108,6 +108,11 @@ class CharactersController < ApplicationController
   # DELETE /games/:game_id/characters/1
   # DELETE /games/:game_id/characters/1.json
   def destroy
+    invited_user = InvitedUser.find_by(character_id: @character.id)
+    if invited_user
+      invited_user.character_id = nil
+      invited_user.save
+    end
     @character.destroy
     respond_to do |format|
       format.html { redirect_to game_path(@character.game.slug),

@@ -22,7 +22,3 @@
 $(function() {
   $(".best_in_place").best_in_place();
 });
-
-$(document).ready(function() {
-  DependentFields.bind()
-});

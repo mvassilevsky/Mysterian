@@ -21,6 +21,7 @@ class Character < ActiveRecord::Base
 
   belongs_to :game
   belongs_to :user
+  has_one :invited_user
   has_many :character_abilities
   has_many :abilities, through: :character_abilities
 
@@ -32,8 +33,6 @@ class Character < ActiveRecord::Base
   end
 
   def slug_candidates
-    [
-      :name,
-    ]
+    [:name]
   end
 end

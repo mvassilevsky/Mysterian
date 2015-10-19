@@ -29,7 +29,11 @@
             <%= link_to character.name, game_character_path(@game, character) %>
           </td>
           <td>
-            <%= character.user.display_name unless character.user.nil? %>
+            <% if character.user %>
+              <%= character.user.display_name %>
+            <% elsif character.invited_user %>
+              <%= character.invited_user.email %>
+            <% end %>
           </td>
           <td>
             <%= link_to 'Delete', game_character_path(@game, character), method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -106,7 +110,11 @@
             <% end %>
           </td>
           <td>
-            <%= character.user.display_name unless character.user.nil? %>
+            <% if character.user %>
+              <%= character.user.display_name %>
+            <% elsif character.invited_user %>
+              <%= character.invited_user.email %>
+            <% end %>
           </td>
         </tr>
         <% end %>
