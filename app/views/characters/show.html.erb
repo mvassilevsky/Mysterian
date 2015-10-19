@@ -148,7 +148,8 @@
         email: email
       },
       success: function(json) {
-        $('#player-name').text(json.email);
+        debugger;
+        $('#player-name').text(json.invited_user_email);
       }
     });
   });

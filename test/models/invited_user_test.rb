@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: invited_users
+#
+#  id           :integer          not null, primary key
+#  email        :string           not null
+#  invite_token :string           not null
+#  game_id      :integer
+#  character_id :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 require 'test_helper'
 
 class InvitedUserTest < ActiveSupport::TestCase

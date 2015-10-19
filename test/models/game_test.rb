@@ -8,6 +8,7 @@
 #  updated_at  :datetime         not null
 #  name        :string           not null
 #  description :text
+#  slug        :string           not null
 #
 
 require 'test_helper'

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   delete 'abilities/:id', to: "character_abilities#delete_character_ability"
 
   post 'games/:id/invite_user', to: "invited_users#invite_user"
-  post 'games/:game_id/characters/:id/invite_user', to: "invited_users#invite_user"
+  post 'games/:game_id/characters/:character_id/invite_user', to: "invited_users#invite_user"
 
   unauthenticated do
     as :user do

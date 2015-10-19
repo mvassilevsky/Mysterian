@@ -9,6 +9,7 @@
 #  updated_at      :datetime         not null
 #  name            :string           not null
 #  character_sheet :text
+#  slug            :string           not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

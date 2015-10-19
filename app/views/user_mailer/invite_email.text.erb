@@ -1,3 +1,4 @@
 You've been invited to play in <%= @game.name %>!
 
-<%= @game.owner.display_name %> has invited you to play <%= @character.name %> in <%= @game.name %>.
+<%= @invited_user.game.owner.display_name %> has invited you to play in <%= @invited_user.game.name %>.
+Please use the following invite code to sign up: <%= @invited_user.invite_token %>.
