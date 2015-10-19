@@ -1,3 +1,6 @@
+<div class="game-id" style="display:none;">
+  <%= @character.game.id %>
+</div>
 <div class="character-id" style="display:none;">
   <%= @character.id %>
 </div>
@@ -9,9 +12,15 @@
   </h1>
 
   <p>
-    <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Player:</strong>
-    <%= best_in_place @character, :player_email, as: :input, display_as: :display_player_email, place_holder: "No Player Assigned", class: "hoverable", url: game_character_path %>
+    <span id="player-name">
+      <% if @character.user %>
+        <%= @character.player.display_name %>
+      <!-- insert stuff for invited users here -->
+      <% else %>
+        No player assigned
+      <% end %>
+    </span>
   </p>
 
   <p>
@@ -38,6 +47,24 @@
       </select>
     </div>
   </p>
+
+  <input name="player-assign" type="radio" value="new">Invite New Player
+  <br>
+  <input name="player-assign" type="radio" value="existing">Assign to Existing Player
+
+  <div class="js-dependent-fields" data-radio-name="player-assign" data-radio-value="new">
+    Email:
+    <input type="text" id="email">
+    <button type="button" class="btn-default invite">Invite</button>
+  </div>
+
+  <div class="js-dependent-fields" data-radio-name="player-assign" data-radio-value="existing">
+    Players without characters:
+    <select class="player-select">
+      <option value="" selected="selected"></option>
+    </select>
+    <button type="button" class="btn-default assign">Assign</button>
+  </div>
 
 <% else %>
   <h1><%= @character.name %></h1>
@@ -88,8 +115,8 @@
       url: '/abilities/add',
       type: 'post',
       data: {
-        character_id : characterId,
-        ability_id : abilityId
+        character_id: characterId,
+        ability_id: abilityId
       },
       success: function(json) {
         $('<span class="ability" data-character-ability-id="' + json.character_ability_id + '"><span class="delete-ability">✖</span>' + $('.ability-select option:selected').text() + '</span>').insertBefore($('.ability-select'));
@@ -107,6 +134,37 @@
       success: function() {
         $(this).parent('.ability').remove();
       }.bind(this)
+    });
+  });
+
+  $(document).on('click', '.invite', function() {
+    var email = $('#email').val();
+    var gameId = $('.game-id').text();
+    var characterId = $('.character-id').text();
+    $.ajax({
+      url: '/games/' + gameId + '/characters/' + characterId + '/invite_user',
+      type: 'post',
+      data: {
+        email: email
+      },
+      success: function(json) {
+        $('#player-name').text(json.email);
+      }
+    });
+  });
+
+  $(document).on('click', '.assign', function() {
+    var playerId = $('.player-select option:selected').data('player-id');
+    $.ajax({
+      url: 'add later',
+      type: 'post',
+      data: {
+        playerId: playerId
+      },
+      success: function(json) {
+        $('#player-name').text(json.display_name);
+        $('.player-select').prop('selectedIndex', 0);
+      }
     });
   });
 </script>

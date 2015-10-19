@@ -17,6 +17,8 @@ gem 'devise-bootstrap-views'
 gem 'font-awesome-sass'
 gem 'best_in_place'
 gem 'friendly_id'
+gem 'dependent-fields-rails'
+gem 'underscore-rails'
 
 group :development do
   gem 'annotate'
