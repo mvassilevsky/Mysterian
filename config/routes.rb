@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'invited_users/invite_user'
+
   resources :games do
     resources :characters
   end
@@ -11,6 +13,9 @@ Rails.application.routes.draw do
 
   post 'abilities/add', to: "character_abilities#add_character_ability"
   delete 'abilities/:id', to: "character_abilities#delete_character_ability"
+
+  post 'games/:id/invite_user', to: "invited_users#invite_user"
+  post 'games/:game_id/characters/:id/invite_user', to: "invited_users#invite_user"
 
   unauthenticated do
     as :user do

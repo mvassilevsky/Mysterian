@@ -85,8 +85,8 @@ class CharactersController < ApplicationController
         if new_user_assigned
           GameUser.where(user_id: @character.user.id,
                          game_id: @character.game.id).first_or_create
-          UserMailer.invite_email(@player, @character.game,
-                                  @character).deliver_now
+          # UserMailer.invite_email(@player, @character.game,
+          #                         @character).deliver_now
           format.html { redirect_to game_path(@character.game_id),
                         notice: 'Character was successfully updated.' }
         else

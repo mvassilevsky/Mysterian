@@ -4,7 +4,12 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-  <h1>You've been invited to play in <%= @game.name %>!</h1>
-  <p><%= @game.owner.display_name %> has invited you to play <%= @character.name %> in <%= @game.name %>.</p>
+  <h1>You've been invited to play in <%= @invited_user.game.name %>!</h1>
+  <% if @invited_user.character.nil? %>
+  	<p><%= @invited_user.game.owner.display_name %> has invited you to play in <%= @invited_user.game.name %>.</p>
+  <% else %>
+  	<p><%= @invited_user.game.owner.display_name %> has invited you to play <%= @invited_user.character.name %> in <%= @invited_user.game.name %>.</p>
+  <% end %>
+  <p><%= Please use the following invite code to sign up: @invited_user.invite_token</p>
 </body>
 </html>
