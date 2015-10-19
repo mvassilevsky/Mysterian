@@ -14,6 +14,7 @@ class CharactersController < ApplicationController
     if @character.game.owner != current_user && @character.user != current_user
       redirect_to games_url, notice: "That's not your character!"
     end
+    @invited_user = InvitedUser.find_by(character_id: @character.id)
     @character_abilities = @character.character_abilities
     @all_abilities = Ability.all
   end

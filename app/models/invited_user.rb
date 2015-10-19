@@ -23,5 +23,4 @@ class InvitedUser < ActiveRecord::Base
 		game_id.nil? ? character.game : Game.find(game_id)
 	end
 
-
 end

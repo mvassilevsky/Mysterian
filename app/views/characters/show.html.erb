@@ -16,7 +16,8 @@
     <span id="player-name">
       <% if @character.user %>
         <%= @character.player.display_name %>
-      <!-- insert stuff for invited users here -->
+      <% elsif @invited_user %>
+        <%= @invited_user.email %>
       <% else %>
         No player assigned
       <% end %>
