@@ -180,13 +180,17 @@
         email: email
       },
       success: function(json) {
-        if ($('#unassigned-players-table').length === 0) {
-          $('#unassigned-players').html('<h2>Players without assigned characters</h2><table class="table" id="unassigned-player-table"><thead><tr><th>Player</th><th></th></tr></thead><tbody></tbody></table>');
+        if (json.failure_message) {
+          alert(json.failure_message);
+        } else {
+          if ($('#unassigned-players-table').length === 0) {
+            $('#unassigned-players').html('<h2>Players without assigned characters</h2><table class="table" id="unassigned-player-table"><thead><tr><th>Player</th><th></th></tr></thead><tbody></tbody></table>');
+          }
+          $('#unassigned-player-table tr:last').after('<tr><td>' +
+                                                      json.invited_user_email +
+                                                      '</td></tr> ' +
+                                                      '<em>(not confirmed)</em>');
         }
-        $('#unassigned-player-table tr:last').after('<tr><td>' +
-                                                    json.invited_user_email +
-                                                    '</td></tr> ' +
-                                                    '<em>(not confirmed)</em>');
       }
     });
   });
