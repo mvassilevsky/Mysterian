@@ -1,3 +1,6 @@
+<div class="game-id" style="display:none;">
+  <%= @game.id %>
+</div>
 <% if current_user == @game.owner %>
   <h1>
     <i class="fa fa-pencil" style="font-size:14px;"></i>
@@ -21,7 +24,6 @@
         </tr>
       </thead>
 
-
       <tbody>
         <% @characters.each do |character| %>
         <tr>
@@ -32,7 +34,7 @@
             <% if character.user %>
               <%= character.user.display_name %>
             <% elsif character.invited_user %>
-              <%= character.invited_user.email %>
+              <%= character.invited_user.email %> <em>(not confirmed)</em>
             <% end %>
           </td>
           <td>
@@ -56,7 +58,6 @@
           <th>Count</th>
         </tr>
       </thead>
-
 
       <tbody>
         <% @ability_counts.each do |ability, count| %>
@@ -94,10 +95,9 @@
         <tr>
           <th>Name</th>
           <th>Player</th>
-          <th colspan="1"></th>
+          <th></th>
         </tr>
       </thead>
-
 
       <tbody>
         <% @characters.each do |character| %>
@@ -113,7 +113,7 @@
             <% if character.user %>
               <%= character.user.display_name %>
             <% elsif character.invited_user %>
-              <%= character.invited_user.email %>
+              <%= character.invited_user.email %> <em>(not confirmed)</em>
             <% end %>
           </td>
         </tr>
@@ -121,6 +121,43 @@
       </tbody>
     </table>
   <% end %>
+<% end %>
+
+<span id="unassigned-players">
+  <% unless @users_without_characters.empty? && @invited_users_without_characters.empty? %>
+    <h2>Players without assigned characters</h2>
+
+    <table class="table" id="unassigned-player-table">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users_without_characters.each do |user| %>
+          <tr>
+            <td><%= user.display_name %></td>
+          </tr>
+        <% end %>
+        <% @invited_users_without_characters.each do |invited_user| %>
+        <tr>
+          <td><%= invited_user.email %> <em>(not confirmed)</em></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</span>
+
+<% if current_user == @game.owner %>
+  <h3>Invite new player</h3>
+  <p>
+    Email:
+    <input type="text" id="email">
+    <button type="button" class="btn-default invite">Invite</button>
+  </p>
 <% end %>
 
 <%= link_to games_path do %>
@@ -131,5 +168,26 @@
 <script>
   $('.best_in_place').bind('ajax:success', function() {
     this.innerHTML = this.innerHTML.replace(/\n/g, '<br />');
+  });
+
+  $(document).on('click', '.invite', function() {
+    var email = $('#email').val();
+    var gameId = $('.game-id').text();
+    $.ajax({
+      url: '/games/' + gameId + '/invite_user',
+      type: 'post',
+      data: {
+        email: email
+      },
+      success: function(json) {
+        if ($('#unassigned-players-table').length === 0) {
+          $('#unassigned-players').html('<h2>Players without assigned characters</h2><table class="table" id="unassigned-player-table"><thead><tr><th>Player</th><th></th></tr></thead><tbody></tbody></table>');
+        }
+        $('#unassigned-player-table tr:last').after('<tr><td>' +
+                                                    json.invited_user_email +
+                                                    '</td></tr> ' +
+                                                    '<em>(not confirmed)</em>');
+      }
+    });
   });
 </script>

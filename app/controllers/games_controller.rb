@@ -23,6 +23,15 @@ class GamesController < ApplicationController
   def show
     @characters = @game.characters.includes(:abilities)
     @character = Character.new
+    game_users = GameUser.where(game_id: @game.id)
+    @users_without_characters = []
+    game_users.each do |game_user|
+      unless Character.exists?(game_id: @game.id, user_id: game_user.user.id)
+        @users_without_characters << game_user.user
+      end
+    end
+    @invited_users_without_characters = InvitedUser.where(game_id: @game.id,
+                                                          character_id: nil)
     @ability_counts = Hash.new(0)
     @has_abilities = false
     @characters.each do |character|
