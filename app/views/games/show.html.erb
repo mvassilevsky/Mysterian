@@ -7,9 +7,9 @@
     <%= best_in_place @game, :name, as: :input, place_holder: "Untitled Game", id: "game_name_#{@game.id}", class: "hoverable" %>
   </h1>
   <p>
-    <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>General Information:</strong>
   </p>
+  <i class="fa fa-pencil" style="font-size:14px;"></i>
   <%= best_in_place @game, :description, as: :textarea, display_with: :simple_format, place_holder: "Background information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }%>
 
   <h2>Characters</h2>

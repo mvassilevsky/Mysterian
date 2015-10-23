@@ -25,13 +25,12 @@
   </p>
 
   <p>
-    <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Character Information:</strong>
   </p>
+  <i class="fa fa-pencil" style="font-size:14px;"></i>
   <%= best_in_place @character, :character_sheet, as: :textarea, display_with: :simple_format, place_holder: "Character information goes here", class: "hoverable", :html_attrs => { :cols => '60', :rows => '20' }, url: game_character_path %>
 
   <p>
-    <i class="fa fa-pencil" style="font-size:14px;"></i>
     <strong>Abilities:</strong>
     <div class="abilities-list">
       <% @character_abilities.each do |character_ability| %>
