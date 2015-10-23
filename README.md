@@ -4,7 +4,7 @@ An application for designing and hosting murder mystery games.
 
 Upon signing up, a user can create a game, of which they are the game
 master. The game master can then add characters to their game, with
-character sheets and abilities (kill, save, steal, etc.)
+character sheets and abilities (kill, save, steal, etc).
 
 Game masters can send email invitations to their friends to play in their game.
 Upon receiving an invite code, the friend can log in or create an account,
