@@ -14,7 +14,15 @@ class InvitedUsersController < ApplicationController
       @invited_user.invite_token = Devise.friendly_token(8)
       if @invited_user.save
         UserMailer.invite_email(@invited_user, @game).deliver_now
-        render json: { invited_user_email: @invited_user.email}
+        character = @invited_user.character
+        if character?
+          if character.invited_user?
+            old_invited_user = character.invited_user
+            old_invited_user.character_id = nil
+            old_invited_user.save
+          end
+        end
+        render json: { invited_user_email: @invited_user.email }
       else
         render json: { failure_message:
                        @invited_user.errors.full_messages.join(". ") }
