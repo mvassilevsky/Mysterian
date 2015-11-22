@@ -16,7 +16,7 @@ class InvitedUser < ActiveRecord::Base
 									  presence: true
 	validates :invite_token, presence: true
 	validates :character_id, presence: true, if: "game_id.nil?"
-	validates :game_id, presence: true, if: "character_id.nil?"
+	validates :game_id, presence: true
 
 	belongs_to :character
 

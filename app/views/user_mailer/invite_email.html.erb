@@ -5,7 +5,7 @@
 </head>
 <body>
   <h1>You've been invited to play in <%= @game.name %>!</h1>
-  <p><%= @invited_user.game.owner.display_name %> has invited you to play in <%= @invited_user.game.name %>.</p>
+  <p><%= @invited_user.game.owner.display_name %> has invited you to play in <%= @game.name %>.</p>
   <p>Please use the following invite code to sign up: <%= @invited_user.invite_token %>.</p>
 </body>
 </html>

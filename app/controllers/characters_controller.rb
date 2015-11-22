@@ -36,29 +36,27 @@ class CharactersController < ApplicationController
     @character = Character.new(character_params)
     @game = Game.friendly.find(params[:game_id])
     @character.game_id = @game.id
-    @player = User.find_by(email: params[:character][:player_email])
-    @character.user_id = @player.id unless @player.nil? #change this when we get registration working
 
     respond_to do |format|
       if @character.save
-        if !params[:character][:player_email].blank?
-          if @player.nil?
-              format.html { redirect_to game_path(@game.slug),
-                            notice: 'Character was successfully created, but ' +
-                                    'there is no user with that email address.' }
-          else
-            GameUser.where(user_id: @character.user.id,
-                           game_id: @character.game.id).first_or_create
-            UserMailer.invite_email(@player, @character.game,
-                                    @character).deliver_now
-            format.html { redirect_to game_path(@game.slug),
-                          notice: 'Character was successfully created.' }
-          end
-        else
+        if params[:character][:player_email].blank?
           format.html { redirect_to game_path(@game.slug),
                         notice: 'Character was successfully created.' }
+        else
+          @invited_user = InvitedUser.new(email: params[:character][:player_email],
+                                          invite_token: Devise.friendly_token(8),
+                                          game_id: @game.id,
+                                          character_id: @character.id)
+          if @invited_user.save
+            UserMailer.invite_email(@invited_user, @character.game).deliver_now
+            format.html { redirect_to game_path(@game.slug),
+                          notice: 'Character was successfully created.' }
+          else
+            format.html { redirect_to game_path(@game.slug),
+                          notice: 'Character was successfully created, but ' +
+                                  'the player could not be invited.' }
+          end
         end
-        format.json { render :show, status: :created, location: @character }
       else
         @characters = @game.characters
         format.html { render 'games/show' }

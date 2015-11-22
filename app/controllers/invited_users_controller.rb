@@ -6,7 +6,7 @@ class InvitedUsersController < ApplicationController
     @game = Game.find(invited_user_params[:game_id])
     if invited_user_params[:email] == @game.owner.email
       render json: { failure_message: "You can't be a player in your own game" }
-    elsif !@game.users.where(email: invited_user_params[:email]).blank?
+    elsif @game.users.where(email: invited_user_params[:email]).any?
       render json: { failure_message:
                      invited_user_params[:email] + " has already accepted their invitation" }
     else
